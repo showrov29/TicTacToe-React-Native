@@ -1,5 +1,5 @@
 import React from "react";
-import {Svg, G, Path} from 'react-native-svg'
+import {Svg, G, Path,Circle} from 'react-native-svg'
 
 export const CodeIcon = () => {
     return (
@@ -25,3 +25,32 @@ export const HeartIcon = () => {
         </Svg>
     )
 }
+
+export const CrossIcon = ({ size = 50 }) => {
+    return (
+        <Svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 106.818 106.795">
+            <Path
+                id="Path_2"
+                data-name="Path 2"
+                d="M295.552,195.115a10.667,10.667,0,0,0-15.083,0l-35.136,35.136-35.115-35.136A10.667,10.667,0,0,0,195.135,210.2l35.115,35.136-35.136,35.115a10.667,10.667,0,1,0,14.821,15.345c.089-.086.176-.173.262-.262l35.136-35.115,35.115,35.115a10.667,10.667,0,0,0,15.083-15.082l-35.115-35.115,35.115-35.115a10.666,10.666,0,0,0,.04-15.085Z"
+                transform="translate(-191.858 -191.992)"
+                fill="#009688"
+            />
+        </Svg>
+    );
+};
+
+export const CircleIcon = ({ size = 50 }) => {
+    return (
+        <Svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 106.666 106.666">
+            <Circle
+                id="Ellipse_1"
+                data-name="Ellipse 1"
+                cx="53.333"
+                cy="53.333"
+                r="53.333"
+                fill="#ffc107"
+            />
+        </Svg>
+    );
+};

@@ -1,124 +1,89 @@
 import React from "react";
-import {ScrollView, Text, View} from "react-native";
-import {Picker} from '@react-native-picker/picker';
-import {Button} from 'react-native-paper';
-import {styles} from "./styles/GameStyle";
-import {useDispatch, useSelector} from "react-redux";
-import {changeDifficulty} from "../redux";
-import {changeMode, restartGame} from "../redux/board/action";
+import { ScrollView, Text, View } from "react-native";
+import { Picker } from "@react-native-picker/picker";
+import { Button } from "react-native-paper";
+import { styles } from "./styles/GameStyle";
+import { useDispatch, useSelector } from "react-redux";
+import { changeDifficulty } from "../redux";
+import { changeMode, restartGame } from "../redux/board/action";
 import Board from "./Board";
-import {CodeIcon, HeartIcon} from "./icons";
-import * as Linking from 'expo-linking';
-
-
+import { OIcon, XIcon } from "./icons"; // Assuming these are the SVG icons used for O and X
+import * as Linking from "expo-linking";
+import { CrossIcon,CircleIcon } from "./icons";
 const Game = () => {
-    const {
-        player1,
-        player2,
-        difficulty,
-        turn,
-        mode
-    } = useSelector((state) => {
-        return state
-    })
+    const { player1, player2, difficulty, turn, mode } = useSelector((state) => state);
 
-    const dispatch = useDispatch()
+    const dispatch = useDispatch();
+
+    const renderTurnIndicator = () => {
+        return turn === 1 ? (
+            <View style={styles.turnContainer}>
+                {/* <XIcon style={styles.turnIcon} /> */}
+                <Text style={styles.turnText}>Turn for:</Text>
+                <CrossIcon size={30} />
+            </View>
+        ) : (
+            <View style={styles.turnContainer}>
+                {/* <OIcon style={styles.turnIcon} /> */}
+                <Text style={styles.turnText}>Turn for:</Text>
+                <CircleIcon size={30} />
+            </View>
+        );
+    };
 
     return (
         <ScrollView>
             <View style={styles.container}>
-                <Text style={styles.turn}>
-                    {turn === 1 && player1.name}
-                    {turn === 2 && player2.name}'s turn
-                </Text>
+                {renderTurnIndicator()}
                 <View style={styles.pickerContainer}>
+                    {/* Difficulty picker only visible in "robot" mode */}
+                    {mode === "robot" && (
+                        <Picker
+                            style={styles.picker}
+                            mode={"dialog"}
+                            selectedValue={difficulty}
+                            onValueChange={(itemValue) => dispatch(changeDifficulty(itemValue))}
+                        >
+                            <Picker.Item label={"easy"} value={"easy"} />
+                            <Picker.Item label={"hard"} value={"hard"} />
+                            <Picker.Item label={"impossible"} value={"impossible"} />
+                        </Picker>
+                    )}
                     <Picker
                         style={styles.picker}
-                        mode={'dialog'}
-                        selectedValue={difficulty}
-                        onValueChange={
-                            (itemValue) => dispatch(changeDifficulty(itemValue))
-                        }
-                    >
-                        <Picker.Item label={'easy'} value={'easy'}/>
-                        <Picker.Item label={'hard'} value={'hard'}/>
-                        <Picker.Item label={'impossible'} value={'impossible'}/>
-                    </Picker>
-                    <Picker
-                        style={styles.picker}
-                        mode={'dialog'}
+                        mode={"dialog"}
                         selectedValue={mode}
-                        onValueChange={
-                            (itemValue) => dispatch(changeMode(itemValue))
-                        }
+                        onValueChange={(itemValue) => dispatch(changeMode(itemValue))}
                     >
-                        <Picker.Item label={'robot'} value={'robot'}/>
-                        <Picker.Item label={'friendly'} value={'friendly'}/>
+                        <Picker.Item label={"robot"} value={"robot"} />
+                        <Picker.Item label={"friendly"} value={"friendly"} />
                     </Picker>
                 </View>
-                <Board/>
-                {
-                    player1.winner && player2.winner ?
-                        <Text style={styles.info}>Draw</Text>
-                        :
-                        player1.winner ?
-                            <Text style={styles.info}>
-                                {player1.winner && `${player1.name} win`}
-                            </Text>
-                            :
-                            <Text style={styles.info}>
-                                {player2.winner && `${player2.name} win`}
-                            </Text>
-                }
-                <Button
-                    mode={'contained'}
-                    onPress={() => dispatch(restartGame())}
-
-                >
+                <Board />
+                {player1.winner && player2.winner ? (
+                    <Text style={styles.info}>Draw</Text>
+                ) : player1.winner ? (
+                    <View style={{flexDirection:'row',alignItems:'center',justifyContent:'center',gap:10}}>
+                    <Text style={styles.info}>{mode=='robot'?'You':'Player'}</Text>
+                   { mode=='friendly' && <CrossIcon size={30} />}
+                    <Text style={styles.info}>Won</Text>
+                   </View>
+                    // <Text style={styles.info}>{`${player1.name} wins`}</Text>
+                    // <CircleIcon size={30} />
+                ) : (
+                    player2.winner &&
+                   ( <View style={{flexDirection:'row',alignItems:'center',justifyContent:'center',gap:10}}>
+                     <Text style={styles.info}>{`${player2.name}`}</Text>
+                     <CircleIcon size={30} />
+                     <Text style={styles.info}>Won</Text>
+                    </View>)
+                )}
+                <Button mode={"contained"} onPress={() => dispatch(restartGame())}>
                     Restart
                 </Button>
-                {/* <CodeIcon/> */}
-                {/* <View style={{
-                    display: 'flex',
-                    flexDirection: 'row',
-                }}>
-                    <Text
-                        style={{
-                            fontSize: 16,
-                            marginRight: 8,
-                        }}
-
-                    >
-                        created with
-                    </Text>
-                    <HeartIcon/>
-                    <Text
-                        style={{
-                            fontSize: 16,
-                            marginLeft: 8,
-                        }}
-                    >
-                        By
-                    </Text>
-                    <Text style={{
-                        fontSize: 16,
-                        marginLeft: 8,
-                        textDecorationLine: "underline",
-                        textDecorationStyle: "solid",
-                        textDecorationColor: "#607D8B"
-                    }}
-                          onPress={() => {
-                              Linking.openURL('https://github.com/MamadTvl/TicTacToe-React-Native')
-                          }}
-                    >
-                        MamadTvl
-                    </Text>
-
-                </View> */}
             </View>
         </ScrollView>
-    )
-}
+    );
+};
 
-
-export default Game
+export default Game;

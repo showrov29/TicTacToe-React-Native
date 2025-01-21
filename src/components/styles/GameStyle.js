@@ -46,7 +46,22 @@ export const styles = StyleSheet.create({
     image: {
         width: 60,
         height: 60,
-    }
+    },
+    turnContainer: {
+        flexDirection: "row",
+        alignItems: "center",
+        marginBottom: 16,
+    },
+    turnIcon: {
+        marginRight: 8,
+        width: 24,
+        height: 24,
+    },
+    turnText: {
+        fontSize: 18,
+        fontWeight: "bold",
+    },
+    
 
 
 })
