@@ -65,17 +65,17 @@ const Game = () => {
                 ) : player1.winner ? (
                     <View style={{flexDirection:'row',alignItems:'center',justifyContent:'center',gap:10}}>
                     <Text style={styles.info}>{mode=='robot'?'You':'Player'}</Text>
+                    <Text style={styles.info}>Won:</Text>
                    { mode=='friendly' && <CrossIcon size={30} />}
-                    <Text style={styles.info}>Won</Text>
                    </View>
                     // <Text style={styles.info}>{`${player1.name} wins`}</Text>
                     // <CircleIcon size={30} />
                 ) : (
                     player2.winner &&
                    ( <View style={{flexDirection:'row',alignItems:'center',justifyContent:'center',gap:10}}>
-                     <Text style={styles.info}>{`${player2.name}`}</Text>
-                     <CircleIcon size={30} />
+                     <Text style={styles.info}>{mode==='robot'?'Robot':"Player"}</Text>
                      <Text style={styles.info}>Won</Text>
+                     <CircleIcon size={30} />
                     </View>)
                 )}
                 <Button mode={"contained"} onPress={() => dispatch(restartGame())}>
