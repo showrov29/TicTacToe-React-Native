@@ -17,15 +17,22 @@ export default function App() {
                 <Stack.Navigator
                     mode={'modal'}
                     headerMode={"float"}
+                    screenOptions={{
+                        headerTitleAlign: 'center', // Center the title
+                      }}
                 >
                     <Stack.Screen
                         name={'Game'}
                         component={Game}
+                        
                         options={{
                             animationTypeForReplace: 'push',
                             title: 'Tic-Tac-Toe',
                             headerStyle: {
                                 // backgroundColor: 'transparent',
+                                alignContent: 'center',
+                                justifyContent: 'center',
+                                
                             },
                         }}
                     />

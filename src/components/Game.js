@@ -19,14 +19,14 @@ const Game = () => {
         return turn === 1 ? (
             <View style={styles.turnContainer}>
                 {/* <XIcon style={styles.turnIcon} /> */}
-                <Text style={styles.turnText}>Turn for:</Text>
-                <CrossIcon size={30} />
+                <Text style={styles.turnText}>Turn for:  </Text>
+                <CrossIcon size={20} />
             </View>
         ) : (
             <View style={styles.turnContainer}>
                 {/* <OIcon style={styles.turnIcon} /> */}
-                <Text style={styles.turnText}>Turn for:</Text>
-                <CircleIcon size={30} />
+                <Text style={styles.turnText}>Turn for:  </Text>
+                <CircleIcon size={20} />
             </View>
         );
     };
@@ -35,6 +35,7 @@ const Game = () => {
         <ScrollView>
             <View style={styles.container}>
                 {renderTurnIndicator()}
+
                 <View style={styles.pickerContainer}>
                     {/* Difficulty picker only visible in "robot" mode */}
                     {mode === "robot" && (
@@ -44,24 +45,26 @@ const Game = () => {
                             selectedValue={difficulty}
                             onValueChange={(itemValue) => dispatch(changeDifficulty(itemValue))}
                         >
-                            <Picker.Item label={"easy"} value={"easy"} />
-                            <Picker.Item label={"hard"} value={"hard"} />
-                            <Picker.Item label={"impossible"} value={"impossible"} />
+                           
+                            <Picker.Item label={"Easy"} value={"easy"} />
+                            <Picker.Item label={"Hard"} value={"hard"} />
+                            <Picker.Item label={"Impossible"} value={"impossible"} />
                         </Picker>
                     )}
+                    
                     <Picker
                         style={styles.picker}
                         mode={"dialog"}
                         selectedValue={mode}
                         onValueChange={(itemValue) => dispatch(changeMode(itemValue))}
                     >
-                        <Picker.Item label={"robot"} value={"robot"} />
-                        <Picker.Item label={"friendly"} value={"friendly"} />
+                        <Picker.Item label={"Robot"} value={"robot"} />
+                        <Picker.Item label={"Friendly"} value={"friendly"} />
                     </Picker>
                 </View>
                 <Board />
                 {player1.winner && player2.winner ? (
-                    <Text style={styles.info}>Draw</Text>
+                    <Text style={styles.info}> It's a Draw</Text>
                 ) : player1.winner ? (
                     <View style={{flexDirection:'row',alignItems:'center',justifyContent:'center',gap:10}}>
                     <Text style={styles.info}>{mode=='robot'?'You':'Player'}</Text>
@@ -78,9 +81,12 @@ const Game = () => {
                      <CircleIcon size={30} />
                     </View>)
                 )}
+                <View style={{alignItems:'center',marginTop:50}}>
                 <Button mode={"contained"} onPress={() => dispatch(restartGame())}>
                     Restart
                 </Button>
+                </View>
+               
             </View>
         </ScrollView>
     );

@@ -5,6 +5,7 @@ export const styles = StyleSheet.create({
         display: 'flex',
         alignItems: 'center',
         marginTop: 16,
+        
     },
     turn: {
         fontSize: 24,
@@ -19,6 +20,10 @@ export const styles = StyleSheet.create({
     pickerContainer: {
         display: 'flex',
         flexDirection: 'row',
+        justifyContent: 'space-around',
+        width: '100%',
+        marginBottom: 56,
+
     },
     picker: {
         width: '50%',
